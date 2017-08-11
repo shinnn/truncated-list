@@ -27,6 +27,18 @@ test('truncatedList()', t => {
   );
 
   t.throws(
+    () => truncatedList(),
+    /RangeError.*Expected 2 arguments \(<Iterable<string>>, <integer>\), but got no arguments instead\./,
+    'should throw an error when it takes no arguments.'
+  );
+
+  t.throws(
+    () => truncatedList([], 0, ''),
+    /RangeError.*Expected 2 arguments \(<Iterable<string>>, <integer>\), but got 3 arguments instead\./,
+    'should throw an error when it takes too many arguments.'
+  );
+
+  t.throws(
     () => truncatedList(null, 1),
     /TypeError.*Expected an iterable object except for string, but got null\./,
     'should throw an error when it takes a falsy value.'

@@ -1,6 +1,6 @@
 'use strict';
 
-const inspect = require('util').inspect;
+const {inspect} = require('util');
 
 const inspectWithKind = require('inspect-with-kind');
 
@@ -11,7 +11,17 @@ function createListItem(line) {
   return `* ${line}`;
 }
 
-module.exports = function abbreviatedList(lines, max) {
+module.exports = function abbreviatedList(...args) {
+  const argLen = args.length;
+
+  if (argLen !== 2) {
+    throw new RangeError(`Expected 2 arguments (<Iterable<string>>, <integer>), but got ${
+      argLen === 0 ? 'no' : argLen
+    } arguments instead.`);
+  }
+
+  const [lines, max] = args;
+
   if (!lines || typeof lines !== 'object' || typeof lines[Symbol.iterator] !== 'function') {
     throw new TypeError(`Expected an iterable object except for string, but got ${
       inspectWithKind(lines)
@@ -38,7 +48,7 @@ module.exports = function abbreviatedList(lines, max) {
     throw new TypeError(`${NUM_ERR}, but got a non-integer number ${max}.`);
   }
 
-  const arr = Array.from(lines);
+  const arr = [...lines];
 
   for (const line of arr) {
     if (typeof line !== 'string') {
