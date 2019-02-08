@@ -1,7 +1,7 @@
 # truncated-list
 
 [![npm version](https://img.shields.io/npm/v/truncated-list.svg)](https://www.npmjs.com/package/truncated-list)
-[![Build Status](https://travis-ci.org/shinnn/truncated-list.svg?branch=master)](https://travis-ci.org/shinnn/truncated-list)
+[![Build Status](https://travis-ci.com/shinnn/truncated-list.svg?branch=master)](https://travis-ci.com/shinnn/truncated-list)
 [![Coverage Status](https://img.shields.io/coveralls/shinnn/truncated-list.svg)](https://coveralls.io/github/shinnn/truncated-list?branch=master)
 
 Create a list of items with truncating lines to the specified maximum number
@@ -29,7 +29,7 @@ console.log(truncatedList([
 
 ## Installation
 
-[Use npm.](https://docs.npmjs.com/cli/install)
+[Use](https://docs.npmjs.com/cli/install) [npm](https://docs.npmjs.com/about-npm/).
 
 ```
 npm install truncated-list
@@ -61,4 +61,4 @@ truncatedList(new Set(['a', 'b']), 1);
 
 ## License
 
-[ISC License](./LICENSE) © 2018 Shinnosuke Watanabe
+[ISC License](./LICENSE) © 2018 - 2019 Shinnosuke Watanabe
