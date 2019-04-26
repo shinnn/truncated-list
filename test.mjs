@@ -1,7 +1,5 @@
-'use strict';
-
-const truncatedList = require('.');
-const test = require('tape');
+import truncatedList from '.';
+import test from 'tape';
 
 test('truncatedList()', t => {
 	t.equal(
