@@ -2,7 +2,7 @@
 
 [![npm version](https://img.shields.io/npm/v/truncated-list.svg)](https://www.npmjs.com/package/truncated-list)
 [![Build Status](https://travis-ci.com/shinnn/truncated-list.svg?branch=master)](https://travis-ci.com/shinnn/truncated-list)
-[![Coverage Status](https://img.shields.io/coveralls/shinnn/truncated-list.svg)](https://coveralls.io/github/shinnn/truncated-list?branch=master)
+[![codecov](https://codecov.io/gh/shinnn/truncated-list/branch/master/graph/badge.svg)](https://codecov.io/gh/shinnn/truncated-list)
 
 Create a list of items with truncating lines to the specified maximum number
 
