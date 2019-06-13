@@ -2,7 +2,7 @@
 	"name": "truncated-list",
 	"version": "1.0.1",
 	"description": "Create a list of items with truncating lines to the specified maximum number",
-	"author": "Shinnosuke Watanabe (https://github.com/shinnn)",
+	"author": "Watanabe Shinnosuke (https://github.com/shinnn)",
 	"repository": "shinnn/truncated-list",
 	"license": "ISC",
 	"scripts": {

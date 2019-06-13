@@ -1,7 +1,7 @@
 # truncated-list
 
 [![npm version](https://img.shields.io/npm/v/truncated-list.svg)](https://www.npmjs.com/package/truncated-list)
-[![Build Status](https://travis-ci.com/shinnn/truncated-list.svg?branch=master)](https://travis-ci.com/shinnn/truncated-list)
+[![Github Actions](https://action-badges.now.sh/shinnn/truncated-list)](https://wdp9fww0r9.execute-api.us-west-2.amazonaws.com/production/results/shinnn/truncated-list)
 [![codecov](https://codecov.io/gh/shinnn/truncated-list/branch/master/graph/badge.svg)](https://codecov.io/gh/shinnn/truncated-list)
 
 Create a list of items with truncating lines to the specified maximum number
@@ -61,4 +61,4 @@ truncatedList(new Set(['a', 'b']), 1);
 
 ## License
 
-[ISC License](./LICENSE) © 2018 - 2019 Shinnosuke Watanabe
+[ISC License](./LICENSE) © 2018 - 2019 Watanabe Shinnosuke
