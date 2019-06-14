@@ -1,106 +1,99 @@
+import {strict as assert} from 'assert';
+
+import test from 'testit';
 import truncatedList from '.';
-import test from 'tape';
 
-test('truncatedList()', t => {
-	t.equal(
-		truncatedList(['a', 'b', 'c'], 3),
-		`* a
+test('create a list of items from an iterable object', () => {
+	assert.equal(truncatedList(['a', 'b', 'c'], 3), `* a
 * b
-* c`,
-		'should create a list of items from an iterable object.'
-	);
+* c`);
+});
 
-	t.equal(
-		truncatedList(new Set(['1', '2', '3', '4', '5']), 2),
-		`* 1
+test('truncate the list to the specified number of lines', () => {
+	assert.equal(truncatedList(new Set(['1', '2', '3', '4', '5']), 2), `* 1
 * 2
-  ... and 3 more`,
-		'should truncate the list to the specified number of lines.'
-	);
+  ... and 3 more`);
+});
 
-	t.equal(
-		truncatedList(new Map(), Number.MAX_SAFE_INTEGER),
-		'',
-		'should return an empty string when the object includes no values.'
-	);
+test('return an empty string when the object includes no values', () => {
+	assert.equal(truncatedList(new Map(), Number.MAX_SAFE_INTEGER), '');
+});
 
-	t.throws(
-		() => truncatedList(),
-		/RangeError.*Expected 2 arguments \(<Iterable<string>>, <integer>\), but got no arguments instead\./u,
-		'should throw an error when it takes no arguments.'
-	);
+test('throw an error when it takes a non-iterable value', () => {
+	assert.throws(() => truncatedList(/^/u, 1), {
+		name: 'TypeError',
+		message: 'Expected an iterable object except for string, but got /^/u (regexp).'
+	});
 
-	t.throws(
-		() => truncatedList([], 0, ''),
-		/RangeError.*Expected 2 arguments \(<Iterable<string>>, <integer>\), but got 3 arguments instead\./u,
-		'should throw an error when it takes too many arguments.'
-	);
+	assert.throws(() => truncatedList(null, 1), {
+		name: 'TypeError',
+		message: 'Expected an iterable object except for string, but got null.'
+	});
+});
 
-	t.throws(
-		() => truncatedList(null, 1),
-		/TypeError.*Expected an iterable object except for string, but got null\./u,
-		'should throw an error when it takes a falsy value.'
-	);
+test('throw an error when the iterable object includes a non-string value', () => {
+	assert.throws(() => truncatedList(['1', Object], 1), {
+		name: 'TypeError',
+		message: 'Expected every value of the given iterable object to be a string, but included [Function: Object].'
+	});
+});
 
-	t.throws(
-		() => truncatedList('abc', 1),
-		/TypeError.*Expected an iterable object except for string, but got 'abc' \(string\)\./u,
-		'should throw an error when it takes a string.'
-	);
+test('throw an error when the iterable object includes an empty string', () => {
+	assert.throws(() => truncatedList([''], 1), {
+		message: 'Expected every value of the given iterable object to be a non-empty string, but included \'\' (empty string).'
+	});
+});
 
-	t.throws(
-		() => truncatedList(/^/u, 1),
-		/TypeError.*Expected an iterable object except for string, but got \/\^\/u \(regexp\)\./u,
-		'should throw an error when it takes a non-iterable object.'
-	);
+test('throw an error when the iterable object includes a multiline string', () => {
+	assert.throws(() => truncatedList(['x\ny'], 1), {
+		message: 'Expected every value of the given iterable object to be a single-line string, but included a multiline string \'x\\ny\'.'
+	});
+});
 
-	t.throws(
-		() => truncatedList([], Buffer.alloc(0)),
-		/TypeError.*Expected a maximum number of list items \(positive integer\), but got a non-number value <Buffer >\./u,
-		'should throw an error when it takes a non-number threshold.'
-	);
+test('throw an error when it takes a string', () => {
+	assert.throws(() => truncatedList('abc', 1), {
+		name: 'TypeError',
+		message: 'Expected an iterable object except for string, but got \'abc\' (string).'
+	});
+});
 
-	t.throws(
-		() => truncatedList([], 0),
-		/TypeError.*Expected a maximum number of list items \(positive integer\), but got a non-positive value 0\./u,
-		'should throw an error when it takes a non-positive threshold.'
-	);
+test('throw an error when the second argument is not a positive finite integer', () => {
+	assert.throws(() => truncatedList([], Buffer.alloc(0)), {
+		name: 'TypeError',
+		message: 'Expected a maximum number of list items (positive integer), but got a non-number value <Buffer >.'
+	});
 
-	t.throws(
-		() => truncatedList([], Infinity),
-		/TypeError.*Expected a maximum number of list items \(positive integer\), but got Infinity\./u,
-		'should throw an error when it takes an infinite threshold.'
-	);
+	assert.throws(() => truncatedList([], 0), {
+		name: 'TypeError',
+		message: 'Expected a maximum number of list items (positive integer), but got a non-positive value 0.'
+	});
 
-	t.throws(
-		() => truncatedList([], Number.MAX_SAFE_INTEGER + 1),
-		/TypeError.*Expected a maximum number of list items \(positive integer\), but got a too large number\./u,
-		'should throw an error when it takes a too large number.'
-	);
+	assert.throws(() => truncatedList([], Infinity), {
+		name: 'TypeError',
+		message: 'Expected a maximum number of list items (positive integer), but got Infinity.'
+	});
 
-	t.throws(
-		() => truncatedList([], 1.1),
-		/TypeError.*Expected a maximum number of list items \(positive integer\), but got a non-integer number 1\.1\./u,
-		'should throw an error when it takes a non-integer number.'
-	);
+	assert.throws(() => truncatedList([], Number.MAX_SAFE_INTEGER + 1), {
+		name: 'TypeError',
+		message: 'Expected a maximum number of list items (positive integer), but got a too large number.'
+	});
 
-	t.throws(
-		() => truncatedList(['1', Object], 1),
-		/TypeError.*Expected every value of the given iterable object to be a string, but included \[Function: Object\]\./u,
-		'should throw an error when the iterable object includes a non-string value.'
-	);
+	assert.throws(() => truncatedList([], 1.1), {
+		name: 'TypeError',
+		message: 'Expected a maximum number of list items (positive integer), but got a non-integer number 1.1.'
+	});
+});
 
-	t.throws(
-		() => truncatedList([''], 1),
-		/Error.*Expected every value of the given iterable object to be a non-empty string, but included '' \(empty string\)\./u,
-		'should throw an error when the iterable object includes an empty string.'
-	);
+test('throw an error when it takes no arguments', () => {
+	assert.throws(() => truncatedList(), {
+		name: 'RangeError',
+		message: 'Expected 2 arguments (<Iterable<string>>, <integer>), but got no arguments instead.'
+	});
+});
 
-	t.throws(
-		() => truncatedList(['x\ny'], 1),
-		/Error.*Expected every value of the given iterable object to be a single-line string, but included a multiline string 'x\\ny'\./u,
-		'should throw an error when the iterable object includes a multiline string.'
-	);
-
-	t.end();
+test('throw an error when it takes too many arguments', () => {
+	assert.throws(() => truncatedList([], 0, ''), {
+		name: 'RangeError',
+		message: 'Expected 2 arguments (<Iterable<string>>, <integer>), but got 3 arguments instead.'
+	});
 });
